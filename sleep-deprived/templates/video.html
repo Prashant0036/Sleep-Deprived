@@ -1,0 +1,22 @@
+<section class="hero-section">
+    <div class="container main-hero-box">
+        {% if data %}
+        <div class="row mt-5">
+            <div class="col-12 d-flex justify-content-center">
+                <h1 class="hero-heading">{{ data.topic }}</h1>
+            </div>
+        </div>
+        <div class="row mt-4 block-options p-5">
+            <div class="col-12">
+                <video width="100%" controls>
+                    <source src="http://localhost:8080/{{ data.videoPath }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p class='text-black mt-5'>{{ data.description }}</p>
+        </div>
+        {% else %}
+        <p>No video data available.</p>
+        {% endif %}
+    </div>
+</section>

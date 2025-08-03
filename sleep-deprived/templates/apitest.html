@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test FastAPI App</title>
+</head>
+<body>
+    <h2>Test FastAPI Video Generator</h2>
+    <form id="videoForm">
+        <label for="inputText">Enter Topic:</label>
+        <input type="text" id="inputText" name="inputText" required>
+        <button type="submit">Generate</button>
+    </form>
+    
+    <h3>Response:</h3>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById("videoForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent form refresh
+            
+            const inputText = document.getElementById("inputText").value;
+            try {
+                const response = await fetch("http://127.0.0.1:8080/search/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ input_text: inputText })
+                });
+                
+                console.log("Raw Response:", response);
+                
+                if (!response.ok) {
+                    throw new Error(`Server Error: ${response.status}`);
+                }
+                
+                const jsonResponse = await response.json();
+                document.getElementById("response").textContent = JSON.stringify(jsonResponse, null, 2);
+            } catch (error) {
+                console.error("Fetch error:", error);
+                document.getElementById("response").textContent = "Error: " + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

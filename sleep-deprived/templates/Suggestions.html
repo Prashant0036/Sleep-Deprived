@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %} Suggestions {% endblock title %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock styles %}
+{% block body %}
+<main class="container-fluid p-0">
+    <h1>Suggestions</h1>
+    <form class="suggestion-form">
+        <div class="form-group">
+            <label for="suggestion-text">Your suggestion:</label>
+            <textarea class="form-control" id="suggestion-text" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+{% endblock body %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock javascript %}

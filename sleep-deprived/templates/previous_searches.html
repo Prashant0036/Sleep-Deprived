@@ -1,0 +1,36 @@
+{% load static %}
+<section class="search-history-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="hero-heading mx-auto text-black">Some Previous Searches</h2>
+                <p class="text-muted section-subtitle">Here are some the last few searches made on this site</p>
+            </div>
+        </div>
+        <div id="search-results-carousel" class="carousel slide" data-bs-ride="carousel">
+            <div style="background: linear-gradient(45deg, #1BA1E3 0%, #5489D6 30%, #9B72CB 54.5%, #D96570 82.5%, #F49C46 100%);bottom:-20px" class="carousel-indicators">
+              <!-- Indicators will be added here by JavaScript -->
+            </div>
+            <div style="height:400px;" class="carousel-inner">
+              <!-- Carousel items will be added here by JavaScript -->
+            </div>
+            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#search-results" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#search-results" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button> -->
+            <div class="row" id="loading-spinner">
+                <div class="d-flex justify-content-center">
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+<script type="module" src="{% static 'js/previous_searches.js' %}"></script>

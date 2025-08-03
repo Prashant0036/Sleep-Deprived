@@ -1,0 +1,123 @@
+{% load static %}
+<script type="module" src="{% static 'js/search_suggestions.js' %}"></script>
+
+<section class="hero-section">
+    <div class="container main-hero-box">
+        <div class="row mt-5">
+            <div class="col-12 d-flex justify-content-center">
+                <h1 class="hero-heading">Your Topic, Your Lecture <span class="just-one-click">Just One Click Away!</span></h1>
+            </div>
+            <div class="col-12 my-4 p-0">
+                <form action="/video" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" id="search-input" name="topic" class="form-control form-control-lg px-5" placeholder="Write your topic here ...">
+                        <div id="suggestions-dropdown"></div>
+                        <button class="btn btn-primary" type="submit">Generate Video</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-4 block-options p-5">
+            <div class="col-12">
+                <p class="text-black mb-3 text-start">Or choose from ones below:</p>
+            </div>
+            <div class="col-12" id="suggestions-container">
+                <!-- Dynamic video suggestions will be inserted here -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for search suggestions -->
+<script type="module">
+    import { getSearchSuggestions } from "{% static 'js/search_suggestions.js' %}";
+
+    const searchInput = document.getElementById('search-input');
+    const suggestionsDropdown = document.getElementById('suggestions-dropdown');
+
+    async function initializeSearch() {
+        const suggestions = await getSearchSuggestions();
+
+        function filterSuggestions(input) {
+            return suggestions.filter(suggestion =>
+                suggestion.toLowerCase().includes(input.toLowerCase())
+            );
+        }
+
+        function displaySuggestions(filteredSuggestions) {
+            suggestionsDropdown.innerHTML = '';
+            if (filteredSuggestions.length > 0) {
+                const list = document.createElement('ul');
+                filteredSuggestions.forEach(suggestion => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = suggestion;
+                    listItem.addEventListener('click', () => {
+                        searchInput.value = suggestion;
+                        suggestionsDropdown.innerHTML = '';
+                    });
+                    list.appendChild(listItem);
+                });
+                suggestionsDropdown.appendChild(list);
+            }
+        }
+
+        searchInput.addEventListener('input', () => {
+            const input = searchInput.value;
+            if (input === "") {
+                suggestionsDropdown.innerHTML = '';
+            } else {
+                const filteredSuggestions = filterSuggestions(input);
+                displaySuggestions(filteredSuggestions);
+            }
+        });
+
+        displaySuggestions([]);
+    }
+
+    initializeSearch();
+</script>
+
+<!-- JavaScript for loading recent suggestions from backend -->
+<script type="module">
+    async function loadRecentSuggestionCards() {
+        const container = document.getElementById('suggestions-container');
+
+        try {
+            const response = await fetch('/previous_searches_data/');
+            const data = await response.json();
+
+            if (!data.topics || data.topics.length === 0) {
+                container.innerHTML = "<p>No recent suggestions available.</p>";
+                return;
+            }
+
+            data.topics.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "card box-shadow-0 h-100 mt-4";
+                card.innerHTML = `
+                    <div class="d-flex flex-row">
+                        <img src="http://localhost:8080/${item.imageUrl}" class="img-fluid rounded-start h-100 img-container-suggestions" alt="${item.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.title}</h5>
+                            <p class="card-text text-muted text-content">${item.description}</p>
+                        </div>
+                    </div>
+                `;
+
+                // Optional: clicking a card auto-fills the input
+                card.addEventListener('click', () => {
+                    document.getElementById('search-input').value = item.title;
+                });
+
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error("Failed to load recent search suggestions:", error);
+            container.innerHTML = "<p>Error loading suggestions. Please try again later.</p>";
+        }
+    }
+
+    loadRecentSuggestionCards();
+</script>

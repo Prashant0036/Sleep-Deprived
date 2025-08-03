@@ -1,0 +1,98 @@
+.img-container-suggestions {
+    width: 100%;
+    max-width: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+/* Layout */
+.hero-section {
+    background: radial-gradient(121.38% 163.84% at 43.06% 18.94%, #1BA1E3 0%, #5489D6 30%, #9B72CB 54.5%, #D96570 82.5%, #F49C46 100%);
+    padding: 10vh 0; /* Using viewport height for vertical padding */
+    color: var(--main-bg);
+    text-align: center;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-hero-box{
+    width:60vw;
+    display:flex;
+    flex-direction: column;
+}
+
+/* Typography */
+.hero-heading {
+    font-family: var(--font-outfit);
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--main-bg);
+    margin-bottom: 20px;
+    max-width: 90%;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.block-options{
+    background:white;
+    border-radius:10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.just-one-click {
+    font-size: 2rem;
+    line-height: 157%;
+    max-width: 90%;
+}
+/* Card Styles */
+.card-title{
+    font-size: 1rem;
+}
+.card-img-top{
+  border-radius: 10px 10px 0px 0px;
+
+}
+.card-body{
+  padding: 10px;
+  text-align: start;
+}
+
+video{
+    border-radius: 10px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-heading {
+        font-size: 2.5rem;
+    }
+    .just-one-click {
+        font-size: 1.5rem;
+    }
+    .card-title{
+        font-size: 0.8rem;
+    }
+    .search-history-section .display-4{
+        font-size: 2rem;
+    }
+    .navbar{
+        padding: 5vh 0;
+    }
+    
+}
+
+@media (max-width: 576px) {
+    .hero-heading {
+        font-size: 2rem;
+    }
+
+    .just-one-click {
+        font-size: 1.2rem;
+    }
+    .card-title{
+        font-size: 0.6rem;
+    }
+}
