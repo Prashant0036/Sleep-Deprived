@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 import google.generativeai as genai 
-genai.configure(api_key='AIzaSyCQOLyBvQLEO2grPQbVhTCMMyfA0UF6DOY')
+genai.configure(api_key='#your api key')
 text_model = genai.GenerativeModel("gemini-2.0-flash-001")
 from .models import GeneratedVideo
 import requests
